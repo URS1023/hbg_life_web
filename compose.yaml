@@ -1,0 +1,29 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      HBG_DATA_DIR: /data
+      HBG_DB_PATH: /data/studio.sqlite3
+      HBG_TEXT_API_BASE: ${HBG_TEXT_API_BASE:-}
+      HBG_TEXT_API_KEY: ${HBG_TEXT_API_KEY:-}
+      HBG_TEXT_MODEL: ${HBG_TEXT_MODEL:-gpt-4.1-mini}
+      HBG_TASK_MODE: worker
+    volumes: [hbg-data:/data]
+    ports: ['8000:8000']
+  worker:
+    build: ./backend
+    command: python -m app.worker
+    environment:
+      HBG_DATA_DIR: /data
+      HBG_DB_PATH: /data/studio.sqlite3
+      HBG_TEXT_API_BASE: ${HBG_TEXT_API_BASE:-}
+      HBG_TEXT_API_KEY: ${HBG_TEXT_API_KEY:-}
+      HBG_TEXT_MODEL: ${HBG_TEXT_MODEL:-gpt-4.1-mini}
+      HBG_TASK_MODE: worker
+    volumes: [hbg-data:/data]
+  web:
+    build: ./apps/web
+    depends_on: [api]
+    ports: ['8080:80']
+volumes:
+  hbg-data:

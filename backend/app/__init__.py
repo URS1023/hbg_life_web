@@ -1,0 +1,1 @@
+"""HBG video studio backend."""
