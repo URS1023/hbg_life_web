@@ -1,10 +1,10 @@
 # 使用 AI 开发 HBG 视频网站：完整实施方案
 
-日期：2026-09-19。性质：开发规划，尚未执行应用开发、安装、生成调用或部署。
+日期：2026-09-19。性质：开发实施总纲；当前已有演示骨架，完成情况以代码和 [development-status.md](./development-status.md) 为准。详细技术基线见 [technical-design.md](./technical-design.md)，接口、数据和执行任务以其配套文档为准。
 
 ## 1. 目标与执行方式
 
-用户希望使用 AI 编码助手完成现有 hbg-life-simulation 的网站产品化，包括前端、后端、模型接入、多用户、任务管理、视频合成、测试和部署准备。
+用户希望使用 AI 编码助手在当前 `ai_life_apply` 根目录完成网站产品化，复用已有制作脚本与规范，包括前端、后端、模型接入、多用户、任务管理、视频合成、测试和部署准备。
 
 本文中的 AI 是开发执行者。产品运行时按已有产品规划提供分步骤创作；不因为使用 AI 开发而引入多 Agent 产品架构。
 
@@ -31,12 +31,12 @@
 
 ## 3. 建议技术方案
 
-现有仓库没有应用框架约束，以下为建议默认方案，正式编码时锁定经过安装和运行验证的兼容版本。
+现有代码已采用 Vue 3、TypeScript、Vite 和 FastAPI。沿用这些框架，逐步补齐持久化、认证和任务能力，正式安装时锁定经过验证的兼容版本。详细方案将 UI 控件库作为按需选择，不要求先引入 Element Plus。
 
 | 层 | 建议选型 | 作用 |
 | --- | --- | --- |
 | 前端 | Vue 3、TypeScript、Vite、Vue Router、Pinia | 创作工作台、项目/素材/任务页面 |
-| UI | Element Plus 基础控件 + 项目设计样式 | 表单、弹窗、表格、状态展示，视频工作台布局单独设计 |
+| UI | 现有样式与语义控件，复杂控件按需引入组件库 | 表单、弹窗、表格、状态展示，视频工作台布局单独设计 |
 | 后端 | Python FastAPI、Pydantic、SQLAlchemy、Alembic | 业务 API、权限、输入校验、数据迁移 |
 | 数据库 | PostgreSQL | 用户、项目、版本、任务、资产引用和用量流水 |
 | 队列 | Celery + Redis | 分离文本/图片/音频/渲染任务 |
@@ -73,10 +73,10 @@ flowchart LR
 
 ## 4. 仓库组织
 
-建议直接在现有 hbg-life-simulation Git 仓库中增加网站应用，保留原有脚本和 Skill 资产，避免新建与上游无关联的嵌套 Git 仓库。
+直接在 `ai_life_apply` Git 根目录开发网站，保留根目录已有脚本和 Skill 资产。嵌套的 `hbg-life-simulation/` 不作为开发或提交目录；不另建下一级网站项目。
 
 ```text
-hbg-life-simulation/
+ai_life_apply/
   apps/
     web/                       # Vue 网站
   backend/
@@ -99,9 +99,13 @@ hbg-life-simulation/
     web-product-plan.md
     ai-development-plan.md
     ai-build-brief.md
-    api-contract.md            # M0 阶段创建
-    data-model.md              # M0 阶段创建
-    acceptance.md              # M0 阶段创建
+    technical-design.md        # 详细技术基线
+    api-contract.md            # 接口契约
+    data-model.md              # 数据模型与迁移
+    workflow-design.md         # 执行、恢复与结算
+    acceptance.md              # 验收用例与门槛
+    implementation-backlog.md  # 可执行工作包
+    adr/                       # 架构决策
     development-status.md      # 执行时维护
 ```
 
@@ -237,8 +241,8 @@ M3 的文本、M4 的图像、M5 的语音接入各自使用小样验证，并�
 
 ## 13. 开发所需输入与下一步
 
-现在即可完成 M0，并在本地环境可用后开发 M1/M2。真实模型配置缺失时，先完成适配器和 mock 联调，持续推进独立工作；需要真实调用的验收保持待完成。
+M0 的详细技术文档已补齐，当前演示骨架不等于 M1/M2 全部完成。下一步按 implementation-backlog 的依赖补齐同源入口、正式认证、版本、资产、持久任务和额度。真实模型配置缺失时，先完成适配器和 mock 联调，持续推进独立工作；真实调用验收保持待完成。
 
 后续需要实际确定：文本/图片/语音渠道及配置方式、是否沿用建议技术栈、部署目标、开放注册还是邀请制。默认按建议技术栈、中文漫画旁白视频、邀请制和本地开发推进，不因可选偏好未答复而反复停止。
 
-可直接交给 AI 的启动任务见 [ai-build-brief.md](./ai-build-brief.md)。该文件是供后续开发调用的任务说明，本轮仅保存方案，没有自动启动其中的开发或外部操作。
+可直接交给 AI 的启动任务见 [ai-build-brief.md](./ai-build-brief.md)。详细工作包见 [implementation-backlog.md](./implementation-backlog.md)。本次技术规划只更新文档，没有执行其中的应用改造或外部操作。

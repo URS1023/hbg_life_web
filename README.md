@@ -18,6 +18,17 @@
   <strong>快闪人生开头 · 连续自然语速 · 语义字幕 · 静态漫画推拉 · 稳定 BGM · 最终成片质检</strong>
 </p>
 
+## 网站开发文档
+
+当前项目根目录为 `ai_life_apply/`。网站前端位于 `apps/web/`，后端位于 `backend/`；目前为演示骨架。根目录已有制作脚本与规范将用于后续完整生成服务，实际完成状态见开发状态文档。
+
+- [产品规划](docs/web-product-plan.md) · [详细技术方案](docs/technical-design.md)
+- [数据模型](docs/data-model.md) · [API 契约](docs/api-contract.md) · [工作流与恢复](docs/workflow-design.md)
+- [AI 开发工作包](docs/implementation-backlog.md) · [验收标准](docs/acceptance.md) · [开发状态](docs/development-status.md)
+- [本地演示运行](docs/run-local.md) · [架构决策](docs/adr/README.md)
+
+以下保留制作 Skill 的使用说明；其中桌面账户代理和内置工具不是已接入的网站生产渠道。
+
 <a id="agent-install"></a>
 
 ## ⚡ 一句话安装进 Agent
@@ -323,13 +334,16 @@ node /path/to/hbg-life-simulation/scripts/render_streaming_ffmpeg.mjs PROJECT_DI
 ## 🗂️ 仓库结构
 
 ```text
-hbg-life-simulation/
+ai_life_apply/
+├── apps/web/                     # Vue 网站演示骨架
+├── backend/                      # FastAPI 演示 API 与 Worker
+├── compose.yaml                  # 当前演示部署配置
 ├── SKILL.md                       # Agent 核心工作流
 ├── agents/openai.yaml             # Skill UI 元数据
 ├── assets/                        # 横屏 / 竖屏样式模板
 ├── references/                    # 开头、视觉、分镜、生图、渲染规则
 ├── scripts/                       # 构建、拆图、渲染与 QA 工具
-├── docs/showcase/hero.svg         # README 代码绘制横幅
+├── docs/                         # 产品、技术、验收、开发状态与展示素材
 ├── .github/workflows/ci.yml       # Skill、脚本和模板校验
 ├── install.sh                     # Codex / Claude Code 安装器
 └── LICENSE                        # MIT License
@@ -351,4 +365,4 @@ hbg-life-simulation/
 
 ## 📄 关于仓库
 
-这个仓库保存的是可安装的 Agent Skill 与确定性辅助脚本。它不提供固定故事模板，也不包含任何用户项目；目标是让 Agent 面对不同中文人生长文案时，始终遵守同一套角色一致性、声音连续性、分镜密度、现实检查和最终质量门槛。
+这个仓库保存网站演示骨架、产品与技术规划，以及可复用的 Agent Skill 和制作脚本。网站目标是让多个用户从关键词或脚本出发，逐步完成角色场景、旁白分镜、图片、音频和视频交付；当前功能范围以开发状态为准。原制作规范继续用于角色一致性、声音连续性、分镜密度和最终质量检查。

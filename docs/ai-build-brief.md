@@ -4,13 +4,15 @@
 
 ---
 
-请在当前 hbg-life-simulation 仓库中开发一个多用户 AI 视频创作网站。
+请在当前 `ai_life_apply` Git 根目录中开发一个多用户 AI 视频创作网站。应用代码直接位于根目录的 `apps/web/` 和 `backend/`；复用根目录的 `scripts/`、`references/`、`assets/`，不在嵌套的 `hbg-life-simulation/` 中开发或提交。
 
 先读取：
 
 - 仓库及父目录适用的 AGENTS.md。
 - docs/web-product-plan.md。
 - docs/ai-development-plan.md。
+- docs/technical-design.md 及其中链接的数据模型、API、工作流和验收文档。
+- docs/implementation-backlog.md，按照工作包依赖推进。
 - docs/development-status.md（如已存在）。
 
 目标：用户可从关键词或已有脚本出发，完成规划、角色场景、旁白、分镜提示词、图片、配乐、预览和视频导出。这里由你负责开发项目，不要求在产品中搭建多 Agent 系统。
@@ -19,7 +21,7 @@
 
 执行顺序：
 
-1. 检查当前实现与环境，完成或补齐 M0 的最小数据模型、API 契约、验收标准和开发状态文档。
+1. 检查当前实现与环境，核对已有 M0 技术文档；保留演示骨架可复用部分，按工作包补齐差距。
 2. 接着执行 M1，完成登录、私人空间、项目管理与可运行前后端。
 3. 接着执行 M2，用显式标记的模拟生成素材打通持久化任务、真实 FFmpeg 合成、任务状态和视频下载。
 4. 继续按开发方案的 M3–M8 推进，每一步记录验证结果。优先小样接入真实模型，避免把所有生成调用拖到最后。
